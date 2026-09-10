@@ -17,6 +17,8 @@ This is the front door for broad visual work. Do not solve every request with on
 
 Vendor guidance never overrides a user constraint or an AWFUL identity/motion/continuity rule.
 
+When `looksawful/awful-picture-skills` contains an approved visual, character or mascot bible for the subject, consume its canonical still/reference and appearance invariants rather than rebuilding the character identity from motion derivatives. This repository owns temporal behavior, frame sequencing, directing and temporal QA.
+
 ## First classify the deliverable
 
 Choose one primary deliverable and any supporting deliverables:
@@ -48,7 +50,9 @@ Always load the relevant AWFUL style/identity skill first when consistency matte
 1. host-provided image generation capability when available;
 2. `openai-imagegen` for a portable generation/edit workflow;
 3. `inference-ai-image-generation` when model choice, LoRA, provider variety or cloud routing matters;
-4. local ComfyUI skills when the user's local workflow/model assets matter.
+4. local ComfyUI skills when local workflow/model assets matter.
+
+If the request is primarily still-image identity, illustration construction or a canonical appearance bible and `awful-picture-skills` is available, use that repository as the appearance-authority layer and return here for animation/video work.
 
 ### Character creation and consistency
 
@@ -67,7 +71,9 @@ A derived pose, expression, sprite or shot must consume the locked character ide
 Load:
 
 - `character-consistency`;
+- `mascot-motion` for personality expressed through timing, posture, gesture, idles and reactions;
 - `disney-animation-principles`;
+- `character-effects-language` when the character has signature glints, dust, trails, impact marks, smears or other recurring effects;
 - `awful-sprite-production` for frame-based output;
 - vendor `openai-hatch-pet` when Codex-pet atlas/runtime rules are relevant;
 - vendor `openai-sprite-pipeline` for strip generation and normalization.
@@ -78,6 +84,8 @@ Load:
 
 - `awful-sprite-production`;
 - `character-consistency` for recurring characters;
+- `mascot-motion` for pet/mascot state behavior;
+- `character-effects-language` if effects have independent triggers/lifetimes;
 - `disney-animation-principles` for performance and timing;
 - vendor `openai-sprite-pipeline` as the preferred normalization workflow;
 - vendor `2dimg2motion` as an optional reference-image-to-motion workflow.
@@ -98,6 +106,8 @@ Load:
 - `ai-video-production`;
 - `storyboard-and-directing` for more than one beat/shot;
 - `character-consistency` for recurring subjects;
+- `mascot-motion` for mascot/pet performance;
+- `character-effects-language` when signature effects must remain causal across shots;
 - `disney-animation-principles` for animated subjects;
 - choose exactly one primary execution backend first: `inference-ai-video-generation`, `higgsfield-generate`, or local `comfyui-video-pipeline`.
 
@@ -122,6 +132,7 @@ Load:
 - `game-asset-production`;
 - `concept-and-style`;
 - `character-consistency` for characters;
+- `mascot-motion` for pet/mascot actors;
 - `awful-sprite-production` for 2D animation;
 - optional vendor `higgsfield-game-generation` for generation;
 - optional `threejs-3d-generator` or `img2threejs` for 3D paths.
