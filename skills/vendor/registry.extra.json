@@ -124,17 +124,6 @@
       "notes": "Broad skill collection applying the classical 12 animation principles across media and task types. AWFUL's local Disney contract remains the normalized source of truth."
     },
     {
-      "id": "minimax-3d-animation-short-research",
-      "name": "3d-animation-short-generator",
-      "repo": "https://github.com/MiniMax-AI/MiniMax-H3.git",
-      "source_path": "skills/3d-animation-short-generator",
-      "tier": "reference",
-      "categories": ["animation-short", "story", "character", "environment", "storyboard", "video", "audio"],
-      "execution": "minimax-hub",
-      "portable": false,
-      "notes": "Strong end-to-end animated-short reference: brief -> story -> character/environment cards -> shots -> storyboard -> generation -> assembly -> BGM -> final review."
-    },
-    {
       "id": "marketingskills-video",
       "name": "video",
       "repo": "https://github.com/coreyhaines31/marketingskills.git",
