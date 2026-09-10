@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Install reviewed external agent skills into .agents/vendor without committing them.
 
-The registry is repository source. Installed vendor copies are local execution state.
+The registries are repository source. Installed vendor copies are local execution state.
 This script intentionally depends only on Python stdlib + git.
 """
 
@@ -17,7 +17,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REGISTRY_PATH = ROOT / "skills" / "vendor" / "registry.json"
+REGISTRY_PATHS = [
+    ROOT / "skills" / "vendor" / "registry.json",
+    ROOT / "skills" / "vendor" / "registry.extra.json",
+]
 INSTALL_ROOT = ROOT / ".agents" / "vendor"
 
 
@@ -40,13 +43,35 @@ def run(cmd: list[str], cwd: Path | None = None) -> str:
     return proc.stdout.strip()
 
 
-def load_registry() -> dict:
+def load_json(path: Path) -> dict:
     try:
-        return json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+        return json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError as exc:
-        raise SystemExit(f"registry not found: {REGISTRY_PATH}") from exc
+        raise SystemExit(f"registry not found: {path}") from exc
     except json.JSONDecodeError as exc:
-        raise SystemExit(f"invalid registry JSON: {exc}") from exc
+        raise SystemExit(f"invalid registry JSON in {path}: {exc}") from exc
+
+
+def load_registry() -> dict:
+    primary = load_json(REGISTRY_PATHS[0])
+    merged = dict(primary)
+    merged["skills"] = list(primary.get("skills", []))
+    seen = {item.get("id") for item in merged["skills"]}
+
+    for path in REGISTRY_PATHS[1:]:
+        if not path.exists():
+            continue
+        extra = load_json(path)
+        for item in extra.get("skills", []):
+            skill_id = item.get("id")
+            if not skill_id:
+                raise SystemExit(f"vendor skill without id in {path}")
+            if skill_id in seen:
+                raise SystemExit(f"duplicate vendor skill id across registries: {skill_id}")
+            seen.add(skill_id)
+            merged["skills"].append(item)
+
+    return merged
 
 
 def skills_by_id(registry: dict) -> dict[str, dict]:
@@ -75,9 +100,6 @@ def install_one(item: dict, force: bool = False) -> None:
         run(["git", "clone", "--depth", "1", "--filter=blob:none", "--sparse", repo, str(checkout)])
 
         if source_path == ".":
-            # Root-scoped skills may contain scripts/references/assets below the root.
-            # `git clone --sparse` initially materializes only root files, so disable
-            # sparse checkout before copying a whole-repository skill.
             run(["git", "sparse-checkout", "disable"], cwd=checkout)
             source = checkout
         else:
@@ -159,7 +181,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="AWFUL MOTION reviewed vendor-skill manager")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    p_list = sub.add_parser("list", help="list reviewed skills")
+    p_list = sub.add_parser("list", help="list reviewed skills from primary + extra registries")
     p_list.add_argument("--category")
     p_list.add_argument("--tier", choices=["core", "recommended", "optional", "reference"])
 
