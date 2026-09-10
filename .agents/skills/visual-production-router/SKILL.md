@@ -12,7 +12,7 @@ This is the front door for broad visual work. Do not solve every request with on
 1. Current user constraints and supplied reference assets.
 2. `AGENTS.md`.
 3. AWFUL repository-local skills under `.agents/skills/`.
-4. Reviewed vendor skills listed in `skills/vendor/registry.json`.
+4. Reviewed vendor skills listed in `skills/vendor/registry.json` and `skills/vendor/registry.extra.json`.
 5. Generic model/provider advice.
 
 Vendor guidance never overrides a user constraint or an AWFUL identity/motion/continuity rule.
@@ -76,7 +76,8 @@ Load:
 - `character-effects-language` when the character has signature glints, dust, trails, impact marks, smears or other recurring effects;
 - `awful-sprite-production` for frame-based output;
 - vendor `openai-hatch-pet` when Codex-pet atlas/runtime rules are relevant;
-- vendor `openai-sprite-pipeline` for strip generation and normalization.
+- vendor `openai-sprite-pipeline` for strip generation and normalization;
+- optional `svg-character-animator` for vector/state-machine mascots.
 
 ### Sprites and sprite atlases
 
@@ -97,7 +98,10 @@ Load:
 - `storyboard-and-directing`;
 - vendor `inference-storyboard-creation`;
 - `disney-animation-principles` for animated performance;
-- optional `director-skills` when screenplay/continuity/model-export routing is useful.
+- optional `director-skills` when screenplay/continuity/model-export routing is useful;
+- optional `cinematic-director` for detailed blocking, coverage, shot rationale and prompt packaging;
+- optional `greybox-harness` when Blender previs should lock scene geography, camera and cut timing before expensive generation;
+- optional `video-storyboard-gen` or `film-storyboard-skill` for generation-oriented storyboard packaging.
 
 ### Generated video
 
@@ -111,11 +115,25 @@ Load:
 - `disney-animation-principles` for animated subjects;
 - choose exactly one primary execution backend first: `inference-ai-video-generation`, `higgsfield-generate`, or local `comfyui-video-pipeline`.
 
+Use `greybox-harness` before expensive generation when spatial/camera/cut continuity is difficult. Use `video-shotcraft` when a product/web promo benefits from its reusable shot recipes, 2.5D camera language and Remotion workflow.
+
 Do not call multiple paid backends merely to compare them unless comparison is part of the task.
+
+### Reference-video reconstruction
+
+When a legitimate reference/owned source should become editable coded motion, optional `remotion-clone-video` provides an extract-frames -> storyboard -> code -> render-stills -> compare loop. Reconstruct craft and authorized assets; access to a reference is not permission to redistribute protected source assets.
 
 ### Motion graphics and deterministic video
 
-Prefer deterministic composition when exact typography, layout, timing, transitions or reusable templates matter more than generative motion. Use `hyperframes-faceless-explainer` when its text-to-motion-graphics route fits. Combine generated image/video assets only where they add value.
+Prefer deterministic composition when exact typography, layout, timing, transitions or reusable templates matter more than generative motion.
+
+Use:
+
+- `hyperframes-faceless-explainer` when its complete text-to-motion-graphics route fits;
+- `hyperframes-animation` for deterministic motion recipes and GSAP/Lottie/Three.js/CSS/WAAPI adapters;
+- `manim-video` for programmatic explainers, diagrams, algorithms and data stories.
+
+Combine generated image/video assets only where they add value.
 
 ### Product mockups / product photography
 
@@ -144,30 +162,39 @@ Decide first whether the deliverable is:
 - concept/reference only;
 - generated mesh/GLB;
 - rigged/animated asset;
-- procedural Three.js reconstruction.
+- procedural Three.js reconstruction;
+- Blender greybox/previs for later video generation.
 
-Use `img2threejs` for code-built procedural reconstruction; use `threejs-3d-generator` for provider-backed GLB/FBX generation; use Higgsfield when its generated 3D route is already the chosen backend. Never call a 2D concept image a 3D asset.
+Use `img2threejs` for code-built procedural reconstruction; use `threejs-3d-generator` for provider-backed GLB/FBX generation; use Higgsfield when its generated 3D route is already the chosen backend; use `greybox-harness` for previs rather than pretending a blockout is final 3D art. Never call a 2D concept image a 3D asset.
+
+### Workflow extraction from tutorials
+
+Use optional vendor `video-to-skill` when a tutorial, playlist or course should become an evidence-grounded reusable operational skill. Preserve source attribution and separate demonstrated steps from later AWFUL adaptations.
 
 ## Vendor installation
+
+The manager merges `skills/vendor/registry.json` and `skills/vendor/registry.extra.json`.
 
 List candidates:
 
 ```bash
 python scripts/vendor_skills.py list
 python scripts/vendor_skills.py list --category sprites
-python scripts/vendor_skills.py list --tier core
+python scripts/vendor_skills.py list --tier recommended
 ```
 
 Inspect before installing:
 
 ```bash
 python scripts/vendor_skills.py info openai-sprite-pipeline
+python scripts/vendor_skills.py info video-shotcraft
 ```
 
 Install only what the current task needs:
 
 ```bash
 python scripts/vendor_skills.py install openai-sprite-pipeline
+python scripts/vendor_skills.py install video-shotcraft
 ```
 
 Do not automatically install every optional skill. Overlapping skills increase routing ambiguity and context cost.
@@ -181,6 +208,7 @@ Before generation, internally record:
 - identity invariants;
 - style invariants;
 - motion invariants when relevant;
+- mascot motion/effects signature when relevant;
 - dimensions/aspect/frame count/runtime format;
 - selected local skills;
 - selected vendor skills;
@@ -193,4 +221,4 @@ Generation is an iteration loop, not a one-shot prompt:
 
 `brief -> constraints -> reference/identity lock -> concept/key poses -> generation -> inspect -> diagnose -> surgical correction -> normalize/export -> final QA`
 
-Never improve a failed generation by randomly appending generic quality adjectives. Diagnose the actual failure: identity drift, pose ambiguity, composition, temporal discontinuity, anatomy, material, camera, lighting, text, scale, anchor, loop seam or model limitation.
+Never improve a failed generation by randomly appending generic quality adjectives. Diagnose the actual failure: identity drift, pose ambiguity, composition, temporal discontinuity, anatomy, material, camera, lighting, text, scale, anchor, loop seam, effect causality or model limitation.
