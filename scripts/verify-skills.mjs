@@ -49,6 +49,7 @@ const requiredDocs = [
   'docs/visual-skill-catalog.md',
   'docs/visual-production-pipelines.md',
   'skills/vendor/registry.json',
+  'skills/vendor/registry.extra.json',
   'skills/vendor/README.md',
   'scripts/vendor_skills.py',
   'scripts/check_registry.py',
@@ -56,22 +57,26 @@ const requiredDocs = [
 ];
 for (const file of requiredDocs) check(exists(file), `missing required file: ${file}`);
 
-try {
-  const vendor = JSON.parse(read('skills/vendor/registry.json'));
-  check(Array.isArray(vendor.skills), 'vendor registry needs skills array');
-  const vendorIds = new Set();
-  for (const skill of vendor.skills ?? []) {
-    check(typeof skill.id === 'string' && skill.id.length > 0, 'every vendor skill needs id');
-    check(!vendorIds.has(skill.id), `duplicate vendor skill id: ${skill.id}`);
-    vendorIds.add(skill.id);
-    check(typeof skill.repo === 'string' && /^https:\/\/github\.com\//.test(skill.repo), `vendor ${skill.id} needs GitHub repo`);
-    check(typeof skill.source_path === 'string' && skill.source_path.length > 0, `vendor ${skill.id} needs source_path`);
-    check(Array.isArray(skill.categories) && skill.categories.length > 0, `vendor ${skill.id} needs categories`);
-    check(['core', 'recommended', 'optional', 'reference'].includes(skill.tier), `vendor ${skill.id} has invalid tier`);
-    check(typeof skill.portable === 'boolean', `vendor ${skill.id} needs portable boolean`);
+const vendorIds = new Set();
+for (const registryPath of ['skills/vendor/registry.json', 'skills/vendor/registry.extra.json']) {
+  try {
+    const vendor = JSON.parse(read(registryPath));
+    check(vendor.version === 1, `${registryPath} version must be 1`);
+    check(Array.isArray(vendor.skills) && vendor.skills.length > 0, `${registryPath} needs non-empty skills array`);
+    for (const skill of vendor.skills ?? []) {
+      check(typeof skill.id === 'string' && skill.id.length > 0, `${registryPath}: every vendor skill needs id`);
+      check(!vendorIds.has(skill.id), `duplicate vendor skill id across registries: ${skill.id}`);
+      vendorIds.add(skill.id);
+      check(typeof skill.repo === 'string' && /^https:\/\/github\.com\//.test(skill.repo), `vendor ${skill.id} needs GitHub repo`);
+      check(typeof skill.source_path === 'string' && skill.source_path.length > 0, `vendor ${skill.id} needs source_path`);
+      check(Array.isArray(skill.categories) && skill.categories.length > 0, `vendor ${skill.id} needs categories`);
+      check(['core', 'recommended', 'optional', 'reference'].includes(skill.tier), `vendor ${skill.id} has invalid tier`);
+      check(typeof skill.portable === 'boolean', `vendor ${skill.id} needs portable boolean`);
+      if (skill.tier === 'reference') check(skill.portable === false, `reference vendor ${skill.id} must be non-portable`);
+    }
+  } catch (error) {
+    failures.push(`unable to parse ${registryPath}: ${error.message}`);
   }
-} catch (error) {
-  failures.push(`unable to parse skills/vendor/registry.json: ${error.message}`);
 }
 
 const agents = read('AGENTS.md');
@@ -101,7 +106,10 @@ for (const token of [
   'openai-sprite-pipeline',
   'inference-ai-video-generation',
   'comfyui-video-pipeline',
-  'higgsfield-product-photoshoot'
+  'higgsfield-product-photoshoot',
+  'video-shotcraft',
+  'greybox-harness',
+  'hyperframes-animation'
 ]) {
   check(router.includes(token), `visual-production-router must route ${token}`);
 }
@@ -115,6 +123,9 @@ for (const token of ['Living pet / mascot', 'AI animated short / cartoon', 'Loca
   check(pipelines.includes(token), `visual production pipelines must include ${token}`);
 }
 
+const vendorManager = read('scripts/vendor_skills.py');
+check(vendorManager.includes('registry.extra.json'), 'vendor manager must merge registry.extra.json');
+
 const evalText = read('evals/routing.yaml');
 const refs = [...evalText.matchAll(/(?:must_load|may_load|must_not_load):\s*\[([^\]]*)\]/g)]
   .flatMap((m) => m[1].split(',').map((x) => x.trim()).filter(Boolean));
@@ -126,4 +137,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`AWFUL Motion Skills verification passed: ${requiredSkills.length} required local skills.`);
+console.log(`AWFUL Motion Skills verification passed: ${requiredSkills.length} required local skills, ${vendorIds.size} reviewed vendor entries.`);
