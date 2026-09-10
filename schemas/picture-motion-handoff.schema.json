@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://looksawful.dev/schemas/picture-motion-handoff.schema.json",
+  "title": "AWFUL Picture to Motion handoff consumer contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "artifact_id", "canonical_references", "preserve", "vary", "avoid", "identity", "style", "delivery", "delegated_to_motion"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "artifact_id": {"type": "string", "minLength": 1},
+    "canonical_references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ref", "roles"],
+        "properties": {
+          "ref": {"type": "string", "minLength": 1},
+          "roles": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "preserve": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "vary": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "avoid": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "identity": {"type": "object"},
+    "style": {"type": "object"},
+    "delivery": {"type": "object"},
+    "known_failure_modes": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "delegated_to_motion": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "enum": ["timing", "spacing", "anticipation", "overlap", "arcs", "secondary-action", "effects-timing", "shot-timing", "temporal-qa"]}
+    }
+  }
+}

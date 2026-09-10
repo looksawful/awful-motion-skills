@@ -9,6 +9,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
 
 const requiredSkills = [
   'visual-production-router',
+  'picture-handoff-consumer',
   'disney-animation-principles',
   'character-consistency',
   'mascot-motion',
@@ -46,6 +47,8 @@ const requiredDocs = [
   'docs/disney-12-principles.md',
   'docs/animation-review-checklist.md',
   'docs/mascot-motion-bible-template.md',
+  'docs/picture-motion-handoff.md',
+  'schemas/picture-motion-handoff.schema.json',
   'docs/visual-skill-catalog.md',
   'docs/visual-production-pipelines.md',
   'skills/vendor/registry.json',
@@ -56,6 +59,18 @@ const requiredDocs = [
   'evals/routing.yaml'
 ];
 for (const file of requiredDocs) check(exists(file), `missing required file: ${file}`);
+
+try {
+  const handoff = JSON.parse(read('schemas/picture-motion-handoff.schema.json'));
+  check(handoff.$schema === 'https://json-schema.org/draft/2020-12/schema', 'handoff schema must use JSON Schema 2020-12');
+  check(handoff.type === 'object', 'handoff schema root must be object');
+  for (const field of ['version','artifact_id','canonical_references','preserve','vary','avoid','identity','style','delivery','delegated_to_motion']) {
+    check(handoff.required?.includes(field), `handoff schema must require ${field}`);
+  }
+  check(handoff.properties?.version?.const === 1, 'handoff schema consumer must explicitly support version 1');
+} catch (error) {
+  failures.push(`unable to parse handoff schema: ${error.message}`);
+}
 
 const vendorIds = new Set();
 for (const registryPath of ['skills/vendor/registry.json', 'skills/vendor/registry.extra.json']) {
@@ -80,37 +95,23 @@ for (const registryPath of ['skills/vendor/registry.json', 'skills/vendor/regist
 }
 
 const agents = read('AGENTS.md');
-for (const token of [
-  'START_HERE.md',
-  'visual-production-router',
-  'mascot-motion',
-  'character-effects-language',
-  'awful-picture-skills',
-  'skills/vendor/registry.json',
-  'scripts/vendor_skills.py',
-  'visual-quality-review'
-]) {
+for (const token of ['START_HERE.md','visual-production-router','mascot-motion','character-effects-language','awful-picture-skills','skills/vendor/registry.json','scripts/vendor_skills.py','visual-quality-review']) {
   check(agents.includes(token), `AGENTS.md must reference ${token}`);
 }
 
 const start = read('START_HERE.md');
-for (const id of ['visual-production-router', 'mascot-motion', 'awful-sprite-production', 'ai-video-production']) {
+for (const id of ['visual-production-router','picture-handoff-consumer','mascot-motion','awful-sprite-production','ai-video-production']) {
   check(start.includes(id), `START_HERE.md must reference ${id}`);
 }
 check(start.includes('awful-picture-skills'), 'START_HERE.md must preserve the picture-skills handoff');
 
+const handoffSkill = read('.agents/skills/picture-handoff-consumer/SKILL.md');
+for (const token of ['canonical','preserve','vary','avoid','identity','style','delegated','awful-picture-skills']) {
+  check(handoffSkill.includes(token), `picture-handoff-consumer must define ${token}`);
+}
+
 const router = read('.agents/skills/visual-production-router/SKILL.md');
-for (const token of [
-  'mascot-motion',
-  'character-effects-language',
-  'openai-sprite-pipeline',
-  'inference-ai-video-generation',
-  'comfyui-video-pipeline',
-  'higgsfield-product-photoshoot',
-  'video-shotcraft',
-  'greybox-harness',
-  'hyperframes-animation'
-]) {
+for (const token of ['mascot-motion','character-effects-language','openai-sprite-pipeline','inference-ai-video-generation','comfyui-video-pipeline','higgsfield-product-photoshoot','video-shotcraft','greybox-harness','hyperframes-animation']) {
   check(router.includes(token), `visual-production-router must route ${token}`);
 }
 
@@ -119,7 +120,7 @@ check(catalog.includes('openai-sprite-pipeline'), 'visual skill catalog must doc
 check(catalog.includes('comfyui-video-pipeline'), 'visual skill catalog must document local ComfyUI video routing');
 
 const pipelines = read('docs/visual-production-pipelines.md');
-for (const token of ['Living pet / mascot', 'AI animated short / cartoon', 'Local ComfyUI video production', 'Game asset pack']) {
+for (const token of ['Living pet / mascot','AI animated short / cartoon','Local ComfyUI video production','Game asset pack']) {
   check(pipelines.includes(token), `visual production pipelines must include ${token}`);
 }
 
@@ -137,4 +138,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`AWFUL Motion Skills verification passed: ${requiredSkills.length} required local skills, ${vendorIds.size} reviewed vendor entries.`);
+console.log(`AWFUL Motion Skills verification passed: ${requiredSkills.length} required local skills, ${vendorIds.size} reviewed vendor entries, Picture handoff v1 supported.`);
