@@ -1,0 +1,160 @@
+{
+  "version": 1,
+  "purpose": "Additional reviewed installable/reference motion and visual-production skills discovered 2026-09-10. Local AWFUL contracts override all entries.",
+  "skills": [
+    {
+      "id": "video-shotcraft",
+      "name": "video-shotcraft",
+      "repo": "https://github.com/Vincentwei1021/video-shotcraft.git",
+      "source_path": ".",
+      "tier": "recommended",
+      "categories": ["video", "directing", "shot-design", "motion-design", "remotion", "product-video"],
+      "execution": "local-plus-runtime",
+      "portable": true,
+      "notes": "Large shot-recipe library and production workflow using Remotion, screenshots, 2.5D camera moves, beat-synced cuts and sound design."
+    },
+    {
+      "id": "greybox-harness",
+      "name": "greybox-harness",
+      "repo": "https://github.com/7ohnson/VLM-Generation-Harness.git",
+      "source_path": ".",
+      "tier": "recommended",
+      "categories": ["video", "previs", "blender", "storyboard", "camera", "continuity", "seedance"],
+      "execution": "local-blender",
+      "portable": true,
+      "notes": "Blender greybox/previs layer for locking scene geography, camera and cut timing before expensive AI-video generation."
+    },
+    {
+      "id": "cinematic-director",
+      "name": "cinematic-director",
+      "repo": "https://github.com/wuwangzhang1216/DirectorSKILL.git",
+      "source_path": ".",
+      "tier": "recommended",
+      "categories": ["directing", "storyboard", "shot-list", "continuity", "video-prompts", "cinematography"],
+      "execution": "prompt-only",
+      "portable": true,
+      "notes": "Director/previs workflow for beats, blocking, coverage, shot rationale, keyframes, motion prompts and continuity. Use observable camera/action instructions, not adjective soup."
+    },
+    {
+      "id": "svg-character-animator",
+      "name": "svg-character-animator",
+      "repo": "https://github.com/molauu/svg-character-animator.git",
+      "source_path": ".",
+      "tier": "recommended",
+      "categories": ["character", "mascot", "svg", "animation", "state-machine", "idle", "react"],
+      "execution": "local-code",
+      "portable": true,
+      "notes": "Production SVG character state-machine approach with morph/transform selection and per-state idle motion. Useful for vector mascots and UI pets."
+    },
+    {
+      "id": "hyperframes-animation",
+      "name": "hyperframes-animation",
+      "repo": "https://github.com/heygen-com/hyperframes.git",
+      "source_path": "skills/hyperframes-animation",
+      "tier": "recommended",
+      "categories": ["video", "motion-graphics", "gsap", "lottie", "threejs", "css", "waapi", "animation"],
+      "execution": "local",
+      "portable": true,
+      "notes": "Deterministic motion knowledge and adapters for HyperFrames. Pair with local identity/motion rules rather than letting runtime recipes define art direction."
+    },
+    {
+      "id": "remotion-clone-video",
+      "name": "remotion-clone-video",
+      "repo": "https://github.com/crafter-station/remotion-clone-video.git",
+      "source_path": ".",
+      "tier": "optional",
+      "categories": ["video", "reference-video", "remotion", "motion-graphics", "reconstruction", "qa"],
+      "execution": "local",
+      "portable": true,
+      "notes": "Frame-extract -> storyboard -> code -> render-stills -> compare loop for reconstructing owned/reference motion as editable Remotion code."
+    },
+    {
+      "id": "video-storyboard-gen",
+      "name": "video-storyboard-gen",
+      "repo": "https://github.com/anyhui/video-storyboard-gen-skill.git",
+      "source_path": ".",
+      "tier": "optional",
+      "categories": ["storyboard", "video-prompts", "seedance", "shot-list", "continuity"],
+      "execution": "prompt-only",
+      "portable": true,
+      "notes": "Executable storyboard/shot planning with continuity and AI-video prompt output. Useful as a specialist reference; AWFUL directing rules remain authoritative."
+    },
+    {
+      "id": "film-storyboard-skill",
+      "name": "film-storyboard-skill",
+      "repo": "https://github.com/RainLib/AI-Storyboard.git",
+      "source_path": ".claude/skills/film-storyboard-skill",
+      "tier": "optional",
+      "categories": ["storyboard", "sequence-board", "image-generation", "animation", "continuity"],
+      "execution": "prompt-plus-image-backend",
+      "portable": true,
+      "notes": "Script-to-storyboard and sequence-board workflow with generation-oriented panel prompts."
+    },
+    {
+      "id": "video-to-skill",
+      "name": "video-to-skill",
+      "repo": "https://github.com/Lum1104/video-to-skill.git",
+      "source_path": ".",
+      "tier": "optional",
+      "categories": ["tutorial", "video-analysis", "skill-authoring", "workflow-extraction"],
+      "execution": "local-plus-media-tools",
+      "portable": true,
+      "notes": "Turns tutorials/playlists/courses into evidence-grounded operational skills. Useful for capturing demonstrated visual-production workflows instead of transcript-only summaries."
+    },
+    {
+      "id": "manim-video",
+      "name": "manim-video",
+      "repo": "https://github.com/ApliroAI/manim-video-lab.git",
+      "source_path": ".",
+      "tier": "optional",
+      "categories": ["video", "explainer", "data-visualization", "diagram", "animation", "python"],
+      "execution": "local",
+      "portable": true,
+      "notes": "Programmatic explanatory animation pipeline for diagrams, algorithms, data stories and educational visuals."
+    },
+    {
+      "id": "animation-principles-research",
+      "name": "animation-principles",
+      "repo": "https://github.com/dylantarre/animation-principles.git",
+      "source_path": ".",
+      "tier": "reference",
+      "categories": ["animation", "disney-principles", "troubleshooting", "motion-design", "character"],
+      "execution": "reference-only",
+      "portable": false,
+      "notes": "Broad skill collection applying the classical 12 animation principles across media and task types. AWFUL's local Disney contract remains the normalized source of truth."
+    },
+    {
+      "id": "minimax-3d-animation-short-research",
+      "name": "3d-animation-short-generator",
+      "repo": "https://github.com/MiniMax-AI/MiniMax-H3.git",
+      "source_path": "skills/3d-animation-short-generator",
+      "tier": "reference",
+      "categories": ["animation-short", "story", "character", "environment", "storyboard", "video", "audio"],
+      "execution": "minimax-hub",
+      "portable": false,
+      "notes": "Strong end-to-end animated-short reference: brief -> story -> character/environment cards -> shots -> storyboard -> generation -> assembly -> BGM -> final review."
+    },
+    {
+      "id": "marketingskills-video",
+      "name": "video",
+      "repo": "https://github.com/coreyhaines31/marketingskills.git",
+      "source_path": "skills/video",
+      "tier": "optional",
+      "categories": ["video", "marketing", "ai-video", "product-demo", "social-video", "programmatic-video"],
+      "execution": "prompt-plus-selected-runtime",
+      "portable": true,
+      "notes": "Broad video-production routing across AI and programmatic tools. Use for commercial-video context, not as a replacement for AWFUL motion/continuity rules."
+    },
+    {
+      "id": "animation-review",
+      "name": "review-animations",
+      "repo": "https://github.com/emilkowalski/skills.git",
+      "source_path": "skills/review-animations",
+      "tier": "optional",
+      "categories": ["animation", "review", "web-motion", "qa", "ui-motion"],
+      "execution": "review-only",
+      "portable": true,
+      "notes": "High-craft review layer for interface/web animation. Narrower than AWFUL visual QA and useful specifically for coded UI motion."
+    }
+  ]
+}
