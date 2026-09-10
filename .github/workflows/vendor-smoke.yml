@@ -28,6 +28,7 @@ jobs:
           - inference-character-design-sheet
           - comfyui-api
           - ip-studio
+          - video-shotcraft
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
