@@ -49,7 +49,7 @@ Before generation define:
 - continuity inherited from previous shot;
 - continuity handed to next shot.
 
-Prefer one major camera idea and one major subject action per short shot. Generators fail more often when asked to perform three camera moves, a costume change, a fight and a weather transition in five seconds, a fact humans keep rediscovering with touching optimism.
+Prefer one major camera idea and one major subject action per short shot. Generators become less reliable when a short clip combines several independent camera moves, redesigns, complex actions and environment transitions.
 
 ## Prompt order
 
