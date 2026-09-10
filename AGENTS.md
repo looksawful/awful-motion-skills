@@ -1,104 +1,220 @@
 # AWFUL MOTION SKILLS agent instructions
 
-This repository stores motion-design rules for AI agents and generative models. Treat repository-local skills as executable working contracts, not inspirational reading.
+This repository is a reusable visual-production knowledge layer for AI agents and generative models. It covers animation principles, character consistency, concept art, sprites, storyboards, AI video, visual style, game assets, 3D routing, mockups, people/product imagery and visual QA.
+
+Treat repository-local skills as executable working contracts, not inspirational reading.
 
 ## Read first
 
 1. Read `README.md`.
-2. For any animation-design, animation-generation, sprite-sheet, motion-graphics, character-performance, UI-motion or motion-review task, read `.agents/skills/disney-animation-principles/SKILL.md`.
-3. Use `docs/disney-12-principles.md` when you need the detailed principle-by-principle reference.
-4. Before claiming completion, run the reasoning checklist in `docs/animation-review-checklist.md` against the result.
+2. For any broad visual request, start with `.agents/skills/visual-production-router/SKILL.md`.
+3. Load only the project-local skills required by the requested deliverable.
+4. If external execution guidance is useful, inspect `skills/vendor/registry.json` and install only the relevant reviewed vendor skill with `scripts/vendor_skills.py`.
+5. Before claiming completion, inspect the actual generated artifact whenever the environment supports it and use `.agents/skills/visual-quality-review/SKILL.md`.
 
-## Core rule
+## Authority order
 
-Do not merely name the 12 principles. Convert them into visible motion decisions.
+When instructions conflict, use this order:
 
-For every motion task, the agent must identify:
+1. explicit user constraints and supplied/approved source assets;
+2. this `AGENTS.md`;
+3. relevant AWFUL skills under `.agents/skills/`;
+4. reviewed vendor skills installed from `skills/vendor/registry.json`;
+5. generic provider/model guidance.
 
-- the primary action;
-- the subject's apparent mass, flexibility and material;
-- the key poses or state changes;
-- anticipation before the main action when appropriate;
-- acceleration/deceleration profile;
-- motion path or arc;
-- parts that lag, overshoot or settle;
-- secondary action that supports, but does not compete with, the primary action;
-- timing and spacing;
-- controlled exaggeration;
-- silhouette/readability/staging;
-- any character-specific motion accent;
-- reduced-motion or static fallback when the target medium requires accessibility support.
+External skills are specialists. They never override the user's locked character, style, format, continuity or motion requirements.
 
-If these decisions are absent, the motion is under-specified.
+## Core production rule
 
-## Principle application policy
+Do not jump directly from a vague request to a one-shot generation prompt when the deliverable depends on identity, continuity, timing, runtime geometry or a reusable visual system.
 
-The classical 12 principles are defaults, not twelve effects that must be forced into every shot.
+Use the smallest appropriate pipeline:
 
+`brief -> constraints -> reference/identity/style lock -> plan/key poses/shots -> generation -> inspection -> diagnosis -> focused correction -> normalization/export -> QA`
+
+A prompt is not the final artifact when generation is available. A generated image is not a sprite atlas until it satisfies frame/anchor/runtime constraints. A storyboard is not a finished video. A successful API response is not proof that the output is visually correct.
+
+## Project-local skill routing
+
+### `visual-production-router`
+
+Front door for broad visual tasks. Classifies the deliverable and chooses the smallest useful local + vendor skill set.
+
+### `disney-animation-principles`
+
+Operational form of the classical 12 animation principles. Use for character/object performance, sprites, generated animation, motion graphics and motion review.
+
+### `character-consistency`
+
+Locks observable identity invariants for recurring people, characters, pets and mascots across poses, expressions, frames and shots.
+
+### `concept-and-style`
+
+Reference analysis, art direction, visual-language specification and concept-art development. Separates identity, style, composition, material, lighting and camera roles.
+
+### `awful-sprite-production`
+
+Frame/action planning, whole-strip generation strategy, normalization, anchors, loops, effects and sprite-atlas QA.
+
+### `story-character-writing`
+
+Characters, arcs, scenes, dialogue, short-form narrative and game narrative written as visible/performable actions that can be storyboarded and animated.
+
+### `storyboard-and-directing`
+
+Scene geography, shot design, staging, camera logic, continuity, generated storyboard panels and animatic-ready timing.
+
+### `ai-video-production`
+
+Text-to-video, image-to-video, reference/keyframe-conditioned shots, multi-shot production, shot manifests, backend choice and temporal QA.
+
+### `game-asset-production`
+
+Coherent runtime-aware asset systems for characters, props, environments, tiles, textures, VFX, UI art and 2D/3D game assets.
+
+### `visual-quality-review`
+
+Artifact inspection across dimensions, composition, identity, anatomy/geometry, material/light, text/logo fidelity, temporal continuity, sprites, games and 3D.
+
+## Animation principle policy
+
+The classical 12 animation principles are defaults, not twelve effects that must be forced into every shot.
+
+- Convert principles into visible motion decisions instead of merely naming them.
 - Apply a principle only when it improves clarity, weight, rhythm, personality or continuity.
 - Never add squash/stretch, overshoot, sparkles, bounce, smear or secondary motion merely because an animation exists.
-- Preserve the user's requested style. The principles control movement, not art direction.
-- Do not convert realistic motion into rubber-hose/cartoon motion unless exaggeration is explicitly appropriate.
-- Do not imitate Disney characters, franchise assets or a proprietary visual identity. Use the general animation principles only.
+- Preserve requested art direction. Motion principles govern movement, not visual identity.
+- Do not convert realistic motion into rubber-hose/cartoon motion unless exaggeration is appropriate.
+- Do not imitate Disney characters, franchise assets or proprietary visual identity. Use the general animation principles only.
 - Prefer one readable idea per beat over simultaneous decorative motion everywhere.
 
-## Required planning output for agents
+For every motion task identify internally:
 
-Before generating or implementing animation, produce an internal motion plan with at least:
+- primary action;
+- apparent mass/flexibility/material;
+- key poses or state changes;
+- anticipation when useful;
+- acceleration/deceleration profile;
+- motion path/arcs;
+- leading/lagging/overshooting parts;
+- subordinate secondary action;
+- timing and spacing;
+- controlled exaggeration;
+- staging/readability;
+- character-specific accents;
+- continuity and reduced-motion/static fallback where the medium requires it.
 
-1. **Intent** — what the viewer must understand or feel.
-2. **Primary action** — the dominant motion.
-3. **Key poses/states** — start, anticipation, action, overshoot/contact if relevant, settle/end.
-4. **Timing** — durations, holds and relative speed.
-5. **Spacing/easing** — acceleration and deceleration behavior.
-6. **Arcs** — trajectories for bodies, limbs, props, camera or UI elements.
-7. **Overlap** — which parts lead, lag and settle later.
-8. **Secondary action** — optional supporting behavior.
-9. **Exaggeration** — what is amplified and why.
-10. **Staging** — how attention is kept on the primary action.
-11. **Continuity** — volume, proportions, identity, contact points and direction.
-12. **Verification** — what must be checked in the result.
+## Character and reference contract
 
-Do not expose this planning format to the end user unless requested; it is an execution contract for agents.
+When a recurring subject is involved:
 
-## Generated frame and sprite-sheet contract
+- identify one current master identity source;
+- distinguish identity references from pose, style, environment and material references;
+- preserve hard invariants such as silhouette, proportions, hair/fur mass, costume hierarchy, palette and recurring asymmetries;
+- do not let a derivative pose/frame/shot silently redefine the master identity;
+- treat unseen details as design decisions rather than recovered facts;
+- compare derivatives against the master before approval.
+
+When the user supplies a reference image, inspect it before making claims about its contents. Do not infer original prompts, seeds, models, lenses or generation settings as facts.
+
+## Generated frame and sprite contract
 
 When generating frame sequences or sprite sheets:
 
-- keep character identity, costume, palette, body proportions and camera consistent unless the animation explicitly changes them;
-- keep the root/contact point stable relative to the intended motion;
-- preserve volume through squash/stretch instead of randomly changing body size;
-- make neighboring frames causally continuous;
-- avoid teleporting hands, props, facial features, shadows or accessories;
-- avoid arbitrary changes in line quality, rendering style or perspective between frames;
-- design readable extremes before generating in-betweens;
-- keep effects on separate conceptual layers when possible: character, prop, contact effect, trailing effect, ambient effect;
-- ensure looping sequences close cleanly in position, velocity and phase when a loop is requested;
-- never use text labels inside generated sprite sheets unless explicitly requested.
+- define action/state, direction, loop/one-shot status, frame count, fps/duration, cell size, atlas layout and root/ground anchor first;
+- design readable extremes before in-betweens;
+- keep identity, costume, palette, proportions and camera stable unless the action intentionally changes them;
+- preserve apparent volume through squash/stretch instead of random body-size changes;
+- keep neighboring frames causally continuous;
+- avoid teleporting hands, props, features, shadows or accessories;
+- keep line/render/material language and perspective stable;
+- normalize generated frames by semantic anchor and approved scale after generation;
+- preserve intentional travel and deformation while removing accidental drift;
+- keep character/prop/contact/trailing/ambient effects conceptually separable when useful;
+- verify the last-to-first transition for loops;
+- never add text labels inside generated sprite sheets unless explicitly requested.
 
-## Character-specific accents
+## AI video contract
 
-A recurring character may have one or two signature secondary effects or motion motifs, but they must follow the action instead of replacing it.
+For every generated shot define start state, end state, one primary action, important secondary motion, framing, camera motion, subject path, duration, continuity inherited from the previous shot and continuity handed to the next.
 
-Examples:
+For multi-shot work maintain a shot manifest. Prefer approved still/keyframe references when identity or composition matters. Inspect actual playback for identity drift, geometry flicker, object permanence, contact/weight, camera path, background topology, costume/prop continuity, editability and audio sync when relevant.
 
-- glasses may catch a brief star-shaped glint at a readable head turn or attitude beat;
-- loose hair may lag and settle after the skull stops;
-- long coat hems may trail the hips and overshoot on a turn;
-- heavy boots may produce a sharper contact pose and shorter rebound;
-- jewelry may use delayed overlapping motion;
-- a stylized UI mascot may use a tiny blink, breath or accessory reaction during an idle.
+Do not ask a short generative clip to solve multiple independent camera moves, redesigns and narrative beats when splitting the sequence gives better control.
 
-Signature effects should be authored per character and reused consistently. Do not sprinkle identical sparkles, dust, bounce or glow across unrelated characters as generic decoration.
+## Style and concept contract
+
+A useful style description must encode reusable mechanisms rather than only adjectives or artist/source names. Separate:
+
+- silhouette/shape language;
+- proportion language;
+- palette roles;
+- material/texture;
+- edge/line treatment;
+- lighting;
+- lens/camera;
+- composition;
+- density/detail budget;
+- typography/graphic treatment when relevant;
+- motion language;
+- explicit anti-rules.
+
+Extract high-level visual logic from references. Do not copy proprietary logos, exact character identities, distinctive protected assets or a living artist's signature identity as the requested output.
+
+## Vendor skill policy
+
+Reviewed external skills are declared in `skills/vendor/registry.json`.
+
+- Install vendor skills only when the current task needs them.
+- Installed copies live under `.agents/vendor/` and are intentionally gitignored.
+- Do not commit third-party skill copies merely for convenience.
+- Record/inspect upstream provenance and license before redistributing third-party source.
+- Treat provider authentication, paid generation and model availability as execution dependencies, not repository guarantees.
+- Never expose API keys or tokens in prompts, reports, commits or generated manifests.
+- Reference-only entries are workflow research, not generic drop-in skills.
+
+Typical commands:
+
+```bash
+python scripts/vendor_skills.py list
+python scripts/vendor_skills.py list --category sprites
+python scripts/vendor_skills.py info openai-sprite-pipeline
+python scripts/vendor_skills.py install openai-sprite-pipeline
+python scripts/vendor_skills.py status
+```
+
+## Backend discipline
+
+Choose the backend after defining the visual problem.
+
+- Prefer a host-provided image generation/editing capability when it satisfies the request.
+- Use cloud multi-model routers when provider/model flexibility is useful.
+- Use local ComfyUI when local checkpoints, LoRAs, ControlNet, explicit graph control or offline/private execution matter.
+- Use deterministic composition/rendering for typography, UI, exact layout and repeatable motion graphics when generative video would reduce control.
+- Use specialized 3D routes only when the requested output is actually a mesh/GLB/procedural model rather than a 2D concept image.
+
+Do not run multiple paid providers simply to create more options unless comparison is part of the task.
 
 ## Change discipline
 
-- Keep principle definitions stable unless correcting an error or clarifying application.
-- Prefer adding medium-specific guidance below the shared principles instead of forking the principles into contradictory copies.
-- Keep rules testable: state observable success/failure conditions wherever possible.
-- Separate motion principles from implementation technology. CSS, GSAP, After Effects, Blender, Canvas, WebGL, sprites and video-generation models may implement the same motion law differently.
-- Do not claim a visual result passes review if you have not actually inspected the rendered frames/video when such inspection is available.
+- Keep shared contracts testable and observable.
+- Prefer one reusable local skill over several near-duplicate prompt files.
+- Add medium/provider-specific behavior below shared identity/style/motion contracts rather than forking those contracts into contradictory copies.
+- Do not hardcode provider model IDs when the provider exposes runtime discovery.
+- Do not assume a vendor skill's old capability list is current. Probe or inspect the current provider when execution depends on it.
+- Do not modify supplied source assets unless the requested task is an edit/transformation.
+- Keep generated artifacts, credentials, caches and installed vendor copies out of repository source unless they are intentional versioned project assets.
 
-## Completion rule
+## Visual completion rule
 
-A motion result is not complete merely because it moves. It is complete when the main action reads clearly, timing supports intent, mass and continuity are believable for the chosen style, secondary motion is subordinate, and the result survives the checklist in `docs/animation-review-checklist.md`.
+A visual result is complete only when the requested artifact exists in the required format and the evidence supports the claim:
+
+- single images require inspection when possible;
+- recurring characters require identity comparison;
+- sprites require frame, anchor, scale, alpha and loop checks;
+- video requires temporal inspection, not only prompt review;
+- game assets require runtime-aware scale/pivot/import checks;
+- 3D assets require geometry/orientation/material/export checks;
+- exact text/logos require direct fidelity inspection.
+
+State limitations explicitly when actual rendering/playback/runtime verification is unavailable. Never promote source inspection into visual evidence.
