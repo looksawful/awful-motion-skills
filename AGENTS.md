@@ -6,7 +6,7 @@ Treat repository-local skills as executable working contracts, not inspirational
 
 ## Read first
 
-1. Read `README.md`.
+1. Read `README.md` and `START_HERE.md`.
 2. For any broad visual request, start with `.agents/skills/visual-production-router/SKILL.md`.
 3. Load only the project-local skills required by the requested deliverable.
 4. If external execution guidance is useful, inspect `skills/vendor/registry.json` and install only the relevant reviewed vendor skill with `scripts/vendor_skills.py`.
@@ -23,6 +23,14 @@ When instructions conflict, use this order:
 5. generic provider/model guidance.
 
 External skills are specialists. They never override the user's locked character, style, format, continuity or motion requirements.
+
+## Cross-repository visual authority
+
+For recurring visual subjects, still-image identity and appearance may be defined by `looksawful/awful-picture-skills`.
+
+When an approved visual/character/mascot bible exists there, treat its canonical reference, silhouette, proportions, palette, rendering language and `preserve/vary/avoid` fields as the appearance source of truth. This repository consumes those locks and owns timing, acting, frame sequencing, effects over time, directing and temporal QA.
+
+A motion derivative must not silently redesign its source character.
 
 ## Core production rule
 
@@ -47,6 +55,14 @@ Operational form of the classical 12 animation principles. Use for character/obj
 ### `character-consistency`
 
 Locks observable identity invariants for recurring people, characters, pets and mascots across poses, expressions, frames and shots.
+
+### `mascot-motion`
+
+Turns mascot/pet personality into observable timing, gesture, idle, reaction and state behavior. Use for recurring UI mascots, game pets and desktop pets together with character consistency and Disney principles.
+
+### `character-effects-language`
+
+Defines causal reusable effects such as glasses glints, impact marks, dust, trails, smears and signature accents through trigger/onset/duration/layer/safe-zone contracts.
 
 ### `concept-and-style`
 
@@ -116,6 +132,19 @@ When a recurring subject is involved:
 - compare derivatives against the master before approval.
 
 When the user supplies a reference image, inspect it before making claims about its contents. Do not infer original prompts, seeds, models, lenses or generation settings as facts.
+
+## Mascot and character-effects contract
+
+For recurring mascots/pets:
+
+- translate personality into observable posture, tempo, gesture amplitude, holds, anticipation, rebound and idle behavior;
+- keep a finite runtime-driven state vocabulary rather than inventing unrelated actions;
+- use low-amplitude continuous idle motion plus sparse micro-events and rarer signature events;
+- author signature effects per character rather than applying generic sparkles/bounce/dust to everyone;
+- define every effect by a cause/trigger, location, onset, lifetime, motion, hierarchy and safe zones;
+- keep effects subordinate to face, hands and the primary silhouette unless the effect itself is the story beat.
+
+A glasses star glint, for example, belongs at a readable light/head-turn or attitude event, follows the lens plane, normally lasts only a few frames, should not cover both eyes and must not fire on every idle loop.
 
 ## Generated frame and sprite contract
 
