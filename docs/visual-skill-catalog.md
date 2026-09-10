@@ -91,7 +91,6 @@ These are useful research/design references but are intentionally not installabl
 | Registry id | Why useful | Why reference-only |
 |---|---|---|
 | `minimax-3d-animation-short` | end-to-end animated-short workflow from story through characters, shots, generation and review | tied to MiniMax Hub Canvas execution |
-| `minimax-3d-animation-short-research` | independently captured version of the same broad short-film workflow | platform-specific MiniMax Hub runtime |
 | `tencent-workrally` | project/series/shot/asset schemas plus image/video/audio/3D production management | depends on WorkRally platform |
 | `animation-principles-research` | broad external interpretation of the classical animation principles | AWFUL's local normalized Disney-principles contract remains authoritative |
 
