@@ -46,7 +46,12 @@ const requiredDocs = [
   'docs/disney-12-principles.md',
   'docs/animation-review-checklist.md',
   'docs/mascot-motion-bible-template.md',
+  'docs/visual-skill-catalog.md',
+  'docs/visual-production-pipelines.md',
   'skills/vendor/registry.json',
+  'skills/vendor/README.md',
+  'scripts/vendor_skills.py',
+  'scripts/check_registry.py',
   'evals/routing.yaml'
 ];
 for (const file of requiredDocs) check(exists(file), `missing required file: ${file}`);
@@ -60,20 +65,54 @@ try {
     check(!vendorIds.has(skill.id), `duplicate vendor skill id: ${skill.id}`);
     vendorIds.add(skill.id);
     check(typeof skill.repo === 'string' && /^https:\/\/github\.com\//.test(skill.repo), `vendor ${skill.id} needs GitHub repo`);
+    check(typeof skill.source_path === 'string' && skill.source_path.length > 0, `vendor ${skill.id} needs source_path`);
+    check(Array.isArray(skill.categories) && skill.categories.length > 0, `vendor ${skill.id} needs categories`);
+    check(['core', 'recommended', 'optional', 'reference'].includes(skill.tier), `vendor ${skill.id} has invalid tier`);
+    check(typeof skill.portable === 'boolean', `vendor ${skill.id} needs portable boolean`);
   }
 } catch (error) {
   failures.push(`unable to parse skills/vendor/registry.json: ${error.message}`);
 }
 
 const agents = read('AGENTS.md');
-check(agents.includes('START_HERE.md'), 'AGENTS.md must route through START_HERE.md');
-check(agents.includes('mascot-motion'), 'AGENTS.md must document mascot-motion');
-check(agents.includes('character-effects-language'), 'AGENTS.md must document character-effects-language');
-check(agents.includes('awful-picture-skills'), 'AGENTS.md must define awful-picture-skills handoff');
+for (const token of [
+  'START_HERE.md',
+  'visual-production-router',
+  'mascot-motion',
+  'character-effects-language',
+  'awful-picture-skills',
+  'skills/vendor/registry.json',
+  'scripts/vendor_skills.py',
+  'visual-quality-review'
+]) {
+  check(agents.includes(token), `AGENTS.md must reference ${token}`);
+}
 
 const start = read('START_HERE.md');
 for (const id of ['visual-production-router', 'mascot-motion', 'awful-sprite-production', 'ai-video-production']) {
   check(start.includes(id), `START_HERE.md must reference ${id}`);
+}
+check(start.includes('awful-picture-skills'), 'START_HERE.md must preserve the picture-skills handoff');
+
+const router = read('.agents/skills/visual-production-router/SKILL.md');
+for (const token of [
+  'mascot-motion',
+  'character-effects-language',
+  'openai-sprite-pipeline',
+  'inference-ai-video-generation',
+  'comfyui-video-pipeline',
+  'higgsfield-product-photoshoot'
+]) {
+  check(router.includes(token), `visual-production-router must route ${token}`);
+}
+
+const catalog = read('docs/visual-skill-catalog.md');
+check(catalog.includes('openai-sprite-pipeline'), 'visual skill catalog must document sprite vendor routing');
+check(catalog.includes('comfyui-video-pipeline'), 'visual skill catalog must document local ComfyUI video routing');
+
+const pipelines = read('docs/visual-production-pipelines.md');
+for (const token of ['Living pet / mascot', 'AI animated short / cartoon', 'Local ComfyUI video production', 'Game asset pack']) {
+  check(pipelines.includes(token), `visual production pipelines must include ${token}`);
 }
 
 const evalText = read('evals/routing.yaml');
