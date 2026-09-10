@@ -1,0 +1,31 @@
+version: 1
+cases:
+  - id: mascot_idle
+    request: "Create a subtle idle loop for the approved mascot"
+    must_load: [character-consistency, mascot-motion, disney-animation-principles]
+    may_load: [character-effects-language, awful-sprite-production, visual-quality-review]
+
+  - id: mascot_glasses_effect
+    request: "Add the mascot's star glint to the glasses during a confident head turn"
+    must_load: [character-consistency, mascot-motion, character-effects-language, disney-animation-principles]
+    may_load: [awful-sprite-production, visual-quality-review]
+
+  - id: sprite_walk
+    request: "Build an 8-frame walk loop from the approved character reference"
+    must_load: [character-consistency, awful-sprite-production, disney-animation-principles]
+    may_load: [mascot-motion, visual-quality-review]
+
+  - id: animated_short
+    request: "Turn this story into a multi-shot animated short"
+    must_load: [story-character-writing, storyboard-and-directing, ai-video-production]
+    may_load: [character-consistency, disney-animation-principles, visual-quality-review]
+
+  - id: storyboard_only
+    request: "Create a shot list and storyboard but do not generate video"
+    must_load: [storyboard-and-directing]
+    may_load: [story-character-writing, disney-animation-principles]
+
+  - id: game_character_assets
+    request: "Create a runtime-ready set of character and VFX assets for a game"
+    must_load: [game-asset-production]
+    may_load: [character-consistency, awful-sprite-production, disney-animation-principles, visual-quality-review]
