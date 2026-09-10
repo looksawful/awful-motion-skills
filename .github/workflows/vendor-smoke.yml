@@ -1,0 +1,42 @@
+name: vendor smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/vendor/**"
+      - "scripts/vendor_skills.py"
+      - ".github/workflows/vendor-smoke.yml"
+  pull_request:
+    paths:
+      - "skills/vendor/**"
+      - "scripts/vendor_skills.py"
+      - ".github/workflows/vendor-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install-smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        skill:
+          - openai-sprite-pipeline
+          - inference-character-design-sheet
+          - comfyui-api
+          - ip-studio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install reviewed skill
+        run: python scripts/vendor_skills.py install "${{ matrix.skill }}"
+      - name: Verify copied contract and provenance
+        run: |
+          test -f ".agents/vendor/${{ matrix.skill }}/SKILL.md"
+          test -f ".agents/vendor/${{ matrix.skill }}/.awful-vendor.json"
+          python -c "import json, pathlib; p=pathlib.Path('.agents/vendor/${{ matrix.skill }}/.awful-vendor.json'); d=json.loads(p.read_text()); assert d['upstream_commit']; assert d['repo'].startswith('https://github.com/')"
