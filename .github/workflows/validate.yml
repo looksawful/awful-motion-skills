@@ -14,20 +14,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - name: Compile Python helpers
         run: python -m py_compile scripts/vendor_skills.py scripts/check_registry.py
       - name: Validate vendor registry JSON
-        run: python -m json.tool skills/vendor/registry.json > /dev/null
-      - name: Validate vendor registry contract
-        run: python scripts/check_registry.py
-      - name: Exercise registry listing
         run: |
-          python scripts/vendor_skills.py list
-          python scripts/vendor_skills.py list --tier core
-          python scripts/vendor_skills.py list --category sprites
+          python -m json.tool skills/vendor/registry.json > /dev/null
+          python -m json.tool skills/vendor/registry.extra.json > /dev/null
+      - name: Validate merged vendor registry contract
+        run: python scripts/check_registry.py
+      - name: Exercise merged registry listing
+        run: |
+          python scripts/vendor_skills.py list > /dev/null
+          python scripts/vendor_skills.py list --tier core > /dev/null
+          python scripts/vendor_skills.py list --tier recommended > /dev/null
+          python scripts/vendor_skills.py list --category sprites > /dev/null
+          python scripts/vendor_skills.py info video-shotcraft > /dev/null
+      - name: Validate repository-native skill graph
+        run: npm run verify:skills
 
   vendor-path-smoke:
     if: github.event_name == 'workflow_dispatch'
@@ -39,6 +48,7 @@ jobs:
           - openai-sprite-pipeline
           - inference-character-design-sheet
           - comfyui-api
+          - video-shotcraft
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
