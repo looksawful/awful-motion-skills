@@ -1,6 +1,6 @@
 # AWFUL MOTION SKILLS
 
-Reusable agent instructions and reviewed production pipelines for visual work with AI models.
+Reusable agent instructions and reviewed production pipelines for visual work with AI models, with motion, video and temporal behavior as the primary ownership area.
 
 The repository is designed to be handed to Codex or another file-capable agent together with a visual task. The agent reads `AGENTS.md` and `START_HERE.md`, routes through the project-local skills, and installs only the reviewed external specialist skills that the task actually needs.
 
@@ -20,7 +20,7 @@ Current local skills cover:
 - game characters, props, environments, tiles, textures, VFX and 2D/3D asset systems;
 - visual QA for generated images, sprites, video and 3D/game assets.
 
-Reviewed vendor routes add specialized execution for OpenAI image/sprite workflows, inference.sh, local ComfyUI, Higgsfield, MiniMax H3 prompting, HyperFrames motion graphics, Three.js/3D generation and other focused tools.
+Reviewed vendor routes add specialized execution for OpenAI image/sprite workflows, inference.sh, local ComfyUI, Higgsfield, MiniMax H3 prompting, HyperFrames motion graphics, Three.js/3D generation, Blender previs, coded SVG character animation and other focused tools.
 
 ## Agent entrypoint
 
@@ -37,18 +37,58 @@ Then load only the local skills required by the task.
 Example request to an agent:
 
 ```text
-Use the AWFUL MOTION SKILLS repository as the visual-production contract.
+Use AWFUL MOTION SKILLS as the motion/video production contract.
 Create a complete idle/walk/reaction sprite set from the approved character reference.
-Preserve character identity, apply the animation-principle rules, use the sprite-production pipeline, inspect the result and report any unresolved visual defects.
+Preserve character identity, derive personality through mascot-motion, apply the animation-principle and character-effects rules, normalize the sprite output, inspect it and report unresolved visual defects.
 ```
 
-The user should not need to know the names of every underlying vendor skill. The router is responsible for selecting them.
+The caller should not need to know every underlying vendor skill name. The router is responsible for selecting the smallest useful set.
 
 ## AWFUL Picture Skills handoff
 
-`looksawful/awful-picture-skills` is the companion still-image/identity hub. It owns illustration construction, character and mascot bibles, canonical still references, style locks, mockup/product fidelity and visual QA for images.
+`looksawful/awful-picture-skills` is the companion still-image/identity hub. It owns illustration construction, character and mascot bibles, canonical still references, style locks, mockup/product fidelity and visual QA for images when those artifacts already exist there.
 
-Motion consumes those approved identity/style locks. It must not silently redesign a recurring character while animating it.
+Motion consumes those approved identity/style locks. It owns timing, acting, state behavior, frame sequencing, effects over time, directing, video and temporal QA. It must not silently redesign a recurring character while animating it.
+
+## Local skills
+
+```text
+visual-production-router
+  -> task classification and routing
+
+disney-animation-principles
+  -> timing, spacing, arcs, anticipation, overlap, staging, exaggeration, appeal
+
+character-consistency
+  -> identity invariants across views, frames and shots
+
+mascot-motion
+  -> personality expressed through idle/action/reaction timing and gesture
+
+character-effects-language
+  -> causal reusable glints, dust, impacts, trails, smears and signature FX
+
+concept-and-style
+  -> reference roles, art direction and reusable visual-language specification
+
+awful-sprite-production
+  -> action strips, anchors, scale, alpha, loops, effects and atlas QA
+
+story-character-writing
+  -> characters, scenes, dialogue, shorts and game narrative as visible action
+
+storyboard-and-directing
+  -> shots, staging, camera, geography, continuity and animatic planning
+
+ai-video-production
+  -> generated-shot contracts, manifests, backend selection and temporal QA
+
+game-asset-production
+  -> runtime-aware 2D/3D asset systems
+
+visual-quality-review
+  -> artifact inspection, defect diagnosis and completion evidence
+```
 
 ## External skills
 
@@ -72,7 +112,7 @@ python scripts/vendor_skills.py install video-shotcraft
 python scripts/vendor_skills.py status
 ```
 
-Use `install-tier` or `install-category` only when a working environment genuinely needs several skills at once. Installing everything makes agent routing worse, not better.
+Use `install-tier` or `install-category` only when a working environment genuinely needs several skills at once. Installing everything increases routing ambiguity and context cost.
 
 Notable extra routes include:
 
@@ -84,6 +124,8 @@ Notable extra routes include:
 - `remotion-clone-video` for frame-checked reference reconstruction;
 - `video-to-skill` for turning demonstrated tutorials into reusable operational skills;
 - `manim-video` for programmatic explanatory animation.
+
+See `docs/visual-skill-catalog.md` for the reviewed capability matrix and `docs/visual-production-pipelines.md` for end-to-end routing recipes.
 
 ## Local ComfyUI
 
@@ -120,6 +162,8 @@ docs/
   disney-12-principles.md
   animation-review-checklist.md
   mascot-motion-bible-template.md
+  visual-skill-catalog.md
+  visual-production-pipelines.md
 evals/
   routing.yaml
 skills/
@@ -129,19 +173,35 @@ skills/
     README.md
 scripts/
   vendor_skills.py
+  check_registry.py
   verify-skills.mjs
 .github/workflows/
   verify-skills.yml
+  validate.yml
+  vendor-smoke.yml
 ```
 
 ## Verification
 
+Local skill/routing contracts:
+
 ```bash
 npm run verify:skills
-python scripts/vendor_skills.py list --tier recommended
 ```
 
-GitHub Actions runs the structural verifier on every push to `main` and on pull requests.
+Vendor registry structure:
+
+```bash
+python scripts/check_registry.py
+```
+
+Combined local verification:
+
+```bash
+npm run verify
+```
+
+GitHub Actions validates local skills and vendor registries on pushes and pull requests. `vendor-smoke.yml` additionally installs representative nested and root-scoped upstream skills when vendor tooling changes, proving that the installer does more than parse a list.
 
 ## Production principle
 
