@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static validation for skills/vendor/registry.json."""
+"""Static validation for AWFUL Motion vendor registries."""
 
 from __future__ import annotations
 
@@ -9,7 +9,10 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-REGISTRY = ROOT / "skills" / "vendor" / "registry.json"
+REGISTRIES = [
+    ROOT / "skills" / "vendor" / "registry.json",
+    ROOT / "skills" / "vendor" / "registry.extra.json",
+]
 TIERS = {"core", "recommended", "optional", "reference"}
 REQUIRED = {
     "id",
@@ -28,17 +31,22 @@ def fail(message: str) -> None:
     raise ValueError(message)
 
 
-def main() -> int:
-    data = json.loads(REGISTRY.read_text(encoding="utf-8"))
+def load_registry(path: Path) -> dict:
+    data = json.loads(path.read_text(encoding="utf-8"))
     if data.get("version") != 1:
-        fail("registry version must be 1")
-
+        fail(f"{path.name}: registry version must be 1")
     skills = data.get("skills")
     if not isinstance(skills, list) or not skills:
-        fail("registry.skills must be a non-empty array")
+        fail(f"{path.name}: skills must be a non-empty array")
+    return data
+
+
+def main() -> int:
+    registries = [load_registry(path) for path in REGISTRIES]
+    skills = [skill for data in registries for skill in data.get("skills", [])]
 
     ids: set[str] = set()
-    names_by_repo_path: set[tuple[str, str]] = set()
+    sources: set[tuple[str, str]] = set()
 
     for index, skill in enumerate(skills):
         if not isinstance(skill, dict):
@@ -52,7 +60,7 @@ def main() -> int:
         if not isinstance(skill_id, str) or not skill_id.strip():
             fail(f"skills[{index}].id must be a non-empty string")
         if skill_id in ids:
-            fail(f"duplicate id: {skill_id}")
+            fail(f"duplicate id across registries: {skill_id}")
         ids.add(skill_id)
 
         if skill["tier"] not in TIERS:
@@ -84,15 +92,15 @@ def main() -> int:
             fail(f"{skill_id}: unsafe source_path {source_path!r}")
 
         pair = (repo.rstrip("/"), source_path.rstrip("/"))
-        if pair in names_by_repo_path:
-            fail(f"duplicate upstream source: {repo} / {source_path}")
-        names_by_repo_path.add(pair)
+        if pair in sources:
+            fail(f"duplicate upstream source across registries: {repo} / {source_path}")
+        sources.add(pair)
 
         for text_field in ("name", "execution", "notes"):
             if not isinstance(skill[text_field], str) or not skill[text_field].strip():
                 fail(f"{skill_id}: {text_field} must be a non-empty string")
 
-    print(f"registry ok: {len(skills)} reviewed skills")
+    print(f"registries ok: {len(skills)} reviewed skills across {len(REGISTRIES)} files")
     return 0
 
 
