@@ -22,7 +22,7 @@ Check the requested facts first:
 - forbidden text/elements;
 - reference fidelity requirements.
 
-A gorgeous wrong-size atlas is still wrong.
+A visually strong asset with the wrong dimensions or format still fails the contract.
 
 ### 2. Composition/readability
 
@@ -106,7 +106,7 @@ Read `awful-sprite-production`. Verify:
 
 Read `game-asset-production`. Verify import scale/orientation/pivot, textures, seams, LOD/budget assumptions, collision/attachment points and runtime appearance.
 
-## Diagnose, do not adjective-spam
+## Diagnose before changing the prompt
 
 Classify each defect as one of:
 
@@ -121,7 +121,7 @@ Classify each defect as one of:
 - technical/export failure;
 - backend capability limitation.
 
-Then choose the smallest repair. Do not respond to every defect by appending `masterpiece, ultra detailed, professional, cinematic` to the prompt. Those words have never repaired a teleporting hand.
+Then choose the smallest repair. Generic quality adjectives do not repair specific geometry, identity or continuity failures.
 
 ## Severity
 
