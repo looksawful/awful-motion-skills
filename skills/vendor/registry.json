@@ -1,0 +1,309 @@
+{
+  "version": 1,
+  "policy": {
+    "install_root": ".agents/vendor",
+    "commit_installed_copies": false,
+    "local_rules_override_vendor": true,
+    "license_policy": "External skills remain upstream-owned. Install on demand, keep copies ignored, and inspect the upstream license before redistributing or copying source into this repository.",
+    "selection_rule": "Install the smallest set that covers the task. Prefer core and recommended entries over optional or reference-only entries."
+  },
+  "skills": [
+    {
+      "id": "openai-imagegen",
+      "name": "imagegen",
+      "repo": "https://github.com/openai/skills.git",
+      "source_path": "skills/.system/imagegen",
+      "tier": "core",
+      "categories": ["image", "editing", "mockup", "concept-art", "reference-image"],
+      "execution": "host-preferred-or-api",
+      "portable": true,
+      "notes": "General image generation/editing backend. Prefer a host-provided image generation tool when available; the skill also documents a CLI fallback."
+    },
+    {
+      "id": "openai-sprite-pipeline",
+      "name": "sprite-pipeline",
+      "repo": "https://github.com/openai/plugins.git",
+      "source_path": "plugins/game-studio/skills/sprite-pipeline",
+      "tier": "core",
+      "categories": ["sprites", "spritesheet", "character", "game-assets", "animation"],
+      "execution": "local-plus-image-backend",
+      "portable": true,
+      "notes": "Whole-strip generation, frame normalization, shared anchors, scale consistency and preview-sheet QA."
+    },
+    {
+      "id": "openai-hatch-pet",
+      "name": "hatch-pet",
+      "repo": "https://github.com/openai/skills.git",
+      "source_path": "skills/.curated/hatch-pet",
+      "tier": "recommended",
+      "categories": ["pet", "mascot", "spritesheet", "character", "animation"],
+      "execution": "local-plus-image-backend",
+      "portable": true,
+      "notes": "Codex-pet-oriented atlas construction and QA. Use its consistency rules even when adapting to another pet runtime."
+    },
+    {
+      "id": "inference-ai-image-generation",
+      "name": "ai-image-generation",
+      "repo": "https://github.com/inference-sh/skills.git",
+      "source_path": "tools/image/ai-image-generation",
+      "tier": "core",
+      "categories": ["image", "concept-art", "mockup", "style", "editing", "lora", "upscale"],
+      "execution": "cloud-api",
+      "portable": true,
+      "notes": "Multi-model image router for GPT Image, FLUX, Gemini, Seedream and other providers through inference.sh."
+    },
+    {
+      "id": "inference-ai-video-generation",
+      "name": "ai-video-generation",
+      "repo": "https://github.com/inference-sh/skills.git",
+      "source_path": "tools/video/ai-video-generation",
+      "tier": "core",
+      "categories": ["video", "image-to-video", "text-to-video", "avatar", "lipsync", "foley"],
+      "execution": "cloud-api",
+      "portable": true,
+      "notes": "Multi-model video router. Useful when the desired model/provider is not fixed in advance."
+    },
+    {
+      "id": "inference-character-design-sheet",
+      "name": "character-design-sheet",
+      "repo": "https://github.com/inference-sh/skills.git",
+      "source_path": "guides/design/character-design-sheet",
+      "tier": "core",
+      "categories": ["character", "character-bible", "turnaround", "expressions", "concept-art", "consistency"],
+      "execution": "prompt-plus-cloud-api",
+      "portable": true,
+      "notes": "Turnarounds, expression sheets, palettes and character consistency techniques."
+    },
+    {
+      "id": "inference-storyboard-creation",
+      "name": "storyboard-creation",
+      "repo": "https://github.com/inference-sh/skills.git",
+      "source_path": "guides/video/storyboard-creation",
+      "tier": "core",
+      "categories": ["storyboard", "shot-list", "directing", "animatic", "continuity"],
+      "execution": "prompt-plus-cloud-api",
+      "portable": true,
+      "notes": "Shot vocabulary, continuity, camera rules, panel planning and animatic preparation."
+    },
+    {
+      "id": "comfyui-api",
+      "name": "comfyui-api",
+      "repo": "https://github.com/MCKRUZ/ComfyUI-Expert.git",
+      "source_path": "skills/comfyui-api",
+      "tier": "core",
+      "categories": ["comfyui", "local-generation", "image", "video", "workflow-execution"],
+      "execution": "local",
+      "portable": true,
+      "notes": "Queues workflows through the ComfyUI REST API, validates availability and retrieves outputs."
+    },
+    {
+      "id": "comfyui-workflow-builder",
+      "name": "comfyui-workflow-builder",
+      "repo": "https://github.com/MCKRUZ/ComfyUI-Expert.git",
+      "source_path": "skills/comfyui-workflow-builder",
+      "tier": "core",
+      "categories": ["comfyui", "workflow", "image", "inpainting", "controlnet", "lora", "upscale"],
+      "execution": "local",
+      "portable": true,
+      "notes": "Builds executable ComfyUI workflow JSON from natural-language production requirements."
+    },
+    {
+      "id": "comfyui-prompt-engineer",
+      "name": "comfyui-prompt-engineer",
+      "repo": "https://github.com/MCKRUZ/ComfyUI-Expert.git",
+      "source_path": "skills/comfyui-prompt-engineer",
+      "tier": "recommended",
+      "categories": ["comfyui", "prompting", "flux", "sdxl", "wan", "character"],
+      "execution": "local",
+      "portable": true,
+      "notes": "Model-specific prompting rather than one generic prompt dialect for every checkpoint."
+    },
+    {
+      "id": "comfyui-video-pipeline",
+      "name": "comfyui-video-pipeline",
+      "repo": "https://github.com/MCKRUZ/ComfyUI-Expert.git",
+      "source_path": "skills/comfyui-video-pipeline",
+      "tier": "core",
+      "categories": ["comfyui", "video", "wan", "framepack", "animatediff", "image-to-video"],
+      "execution": "local",
+      "portable": true,
+      "notes": "Local video generation routing. Treat hardware/model requirements as dynamic and verify local inventory before execution."
+    },
+    {
+      "id": "higgsfield-generate",
+      "name": "higgsfield-generate",
+      "repo": "https://github.com/higgsfield-ai/skills.git",
+      "source_path": "higgsfield-generate",
+      "tier": "core",
+      "categories": ["image", "video", "3d", "audio", "character", "reference-image"],
+      "execution": "cloud-api",
+      "portable": true,
+      "notes": "Broad image/video/3D/audio generation and reference-aware workflows. Requires Higgsfield CLI/auth."
+    },
+    {
+      "id": "higgsfield-product-photoshoot",
+      "name": "higgsfield-product-photoshoot",
+      "repo": "https://github.com/higgsfield-ai/skills.git",
+      "source_path": "higgsfield-product-photoshoot",
+      "tier": "recommended",
+      "categories": ["mockup", "product", "fashion", "human", "photoshoot", "advertising"],
+      "execution": "cloud-api",
+      "portable": true,
+      "notes": "Studio, lifestyle, person-with-product, virtual try-on, hero/banner, carousel and conceptual product modes."
+    },
+    {
+      "id": "higgsfield-game-generation",
+      "name": "higgsfield-game-generation",
+      "repo": "https://github.com/higgsfield-ai/skills.git",
+      "source_path": "higgsfield-game-generation",
+      "tier": "recommended",
+      "categories": ["game-assets", "sprites", "textures", "3d", "character-animation", "audio"],
+      "execution": "cloud-api",
+      "portable": true,
+      "notes": "Can operate in assets-only mode for sprites, tileable textures, animated 3D assets, music, SFX and voice."
+    },
+    {
+      "id": "ip-studio",
+      "name": "ip-studio",
+      "repo": "https://github.com/CheshireMew/ip-studio.git",
+      "source_path": ".",
+      "tier": "recommended",
+      "categories": ["character", "identity", "pet", "mascot", "sprites", "atlas", "consistency"],
+      "execution": "prompt-plus-image-backend",
+      "portable": true,
+      "notes": "Locks a reusable 2D character identity and derives static/dynamic states without letting derivatives redefine the master identity."
+    },
+    {
+      "id": "2dimg2motion",
+      "name": "2dimg2motion",
+      "repo": "https://github.com/WU-HAOTIAN34/2dimg2motion.git",
+      "source_path": ".",
+      "tier": "recommended",
+      "categories": ["sprites", "character", "animation", "image-to-motion", "game-assets"],
+      "execution": "prompt-plus-image-backend",
+      "portable": true,
+      "notes": "Reference-image-to-animation-frame workflow with identity locking and sprite-sheet output."
+    },
+    {
+      "id": "minimax-h3-prompt-writing",
+      "name": "h3-prompt-writing",
+      "repo": "https://github.com/MiniMax-AI/MiniMax-H3.git",
+      "source_path": "skills/h3-prompt-writing",
+      "tier": "recommended",
+      "categories": ["video", "prompting", "reference-video", "keyframes", "motion"],
+      "execution": "prompt-only",
+      "portable": true,
+      "notes": "Portable MiniMax H3 prompting skill. Unlike the Hub-canvas production skills, this one is explicitly usable by generic agent harnesses."
+    },
+    {
+      "id": "hyperframes-faceless-explainer",
+      "name": "faceless-explainer",
+      "repo": "https://github.com/heygen-com/hyperframes.git",
+      "source_path": "skills/faceless-explainer",
+      "tier": "recommended",
+      "categories": ["video", "motion-graphics", "script", "storyboard", "gsap", "rendering"],
+      "execution": "local",
+      "portable": true,
+      "notes": "Deterministic HTML/GSAP explainer-video production from text; useful when generated video is not the right tool for every shot."
+    },
+    {
+      "id": "img2threejs",
+      "name": "img2threejs",
+      "repo": "https://github.com/img2threejs/img2threejs.git",
+      "source_path": ".",
+      "tier": "recommended",
+      "categories": ["3d", "image-to-3d", "threejs", "game-assets", "character"],
+      "execution": "local",
+      "portable": true,
+      "notes": "Reference-image to animation-ready procedural Three.js model with staged visual correction."
+    },
+    {
+      "id": "threejs-3d-generator",
+      "name": "threejs-3d-generator",
+      "repo": "https://github.com/majidmanzarpour/threejs-game-skills.git",
+      "source_path": "skills/threejs-3d-generator",
+      "tier": "optional",
+      "categories": ["3d", "text-to-3d", "image-to-3d", "rigging", "game-assets", "gltf"],
+      "execution": "cloud-api",
+      "portable": true,
+      "notes": "Tripo-backed GLB/FBX generation, texturing, rigging, retargeting and game-ready conversion."
+    },
+    {
+      "id": "design-dna",
+      "name": "design-dna",
+      "repo": "https://github.com/zanwei/design-dna.git",
+      "source_path": ".",
+      "tier": "recommended",
+      "categories": ["style", "reference-analysis", "design-system", "visual-effects", "art-direction"],
+      "execution": "prompt-only",
+      "portable": true,
+      "notes": "Extracts measurable design tokens, qualitative visual language and effects into a structured profile. Use as analysis, not as permission to copy identity."
+    },
+    {
+      "id": "photoreal-human-prompting",
+      "name": "photoreal",
+      "repo": "https://github.com/revfactory/skills.git",
+      "source_path": "photoreal",
+      "tier": "optional",
+      "categories": ["human", "photoreal", "photography", "prompting"],
+      "execution": "prompt-only",
+      "portable": true,
+      "notes": "Prompt layer for less synthetic-looking photographic human imagery. Pair with an actual image backend."
+    },
+    {
+      "id": "oil-icon",
+      "name": "oil-icon",
+      "repo": "https://github.com/oil-oil/oil-icon.git",
+      "source_path": ".",
+      "tier": "optional",
+      "categories": ["icons", "game-assets", "visual-system", "transparent-assets"],
+      "execution": "local-plus-image-backend",
+      "portable": true,
+      "notes": "Generates a coherent sheet first, then slices/background-removes it so an icon set shares one visual language."
+    },
+    {
+      "id": "ads-product-photoshoot",
+      "name": "ads-photoshoot",
+      "repo": "https://github.com/AgriciDaniel/claude-ads.git",
+      "source_path": "skills/ads-photoshoot",
+      "tier": "optional",
+      "categories": ["product", "mockup", "advertising", "photoshoot", "fidelity"],
+      "execution": "image-backend-dependent",
+      "portable": true,
+      "notes": "Product-fidelity-heavy alternative for paid-ad photoshoot variants with provenance and review gates."
+    },
+    {
+      "id": "director-skills",
+      "name": "director-skills",
+      "repo": "https://github.com/0xhughs/director-skills.git",
+      "source_path": ".",
+      "tier": "optional",
+      "categories": ["script", "screenplay", "storyboard", "directing", "continuity", "video-prompts"],
+      "execution": "prompt-only",
+      "portable": true,
+      "notes": "Modular filmmaking router covering story, screenplay scenes, shot lists, visual bibles, continuity and model-specific prompt packaging."
+    },
+    {
+      "id": "minimax-3d-animation-short",
+      "name": "3d-animation-short-generator",
+      "repo": "https://github.com/MiniMax-AI/MiniMax-H3.git",
+      "source_path": "skills/3d-animation-short-generator",
+      "tier": "reference",
+      "categories": ["animation-short", "script", "character", "environment", "storyboard", "video"],
+      "execution": "minimax-hub-canvas",
+      "portable": false,
+      "notes": "Excellent workflow reference, but its execution path depends on MiniMax Hub canvas tools. Do not present it as a generic drop-in runtime skill."
+    },
+    {
+      "id": "tencent-workrally",
+      "name": "workrally",
+      "repo": "https://github.com/Tencent/workrally.git",
+      "source_path": ".",
+      "tier": "reference",
+      "categories": ["image", "video", "audio", "3d", "storyboard", "asset-library", "production-management"],
+      "execution": "workrally-platform",
+      "portable": false,
+      "notes": "Broad AIGC production-management CLI and useful reference for project/series/shot/asset schemas. Platform-specific, so keep outside the default install set."
+    }
+  ]
+}
