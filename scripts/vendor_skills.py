@@ -53,12 +53,6 @@ def skills_by_id(registry: dict) -> dict[str, dict]:
     return {item["id"]: item for item in registry.get("skills", [])}
 
 
-def skill_md_for(target: Path, source_path: str) -> Path:
-    if source_path == ".":
-        return target / "SKILL.md"
-    return target / "SKILL.md"
-
-
 def install_one(item: dict, force: bool = False) -> None:
     if not item.get("portable", False):
         raise SystemExit(
@@ -80,11 +74,15 @@ def install_one(item: dict, force: bool = False) -> None:
         checkout = Path(tmp) / "repo"
         run(["git", "clone", "--depth", "1", "--filter=blob:none", "--sparse", repo, str(checkout)])
 
-        if source_path != ".":
+        if source_path == ".":
+            # Root-scoped skills may contain scripts/references/assets below the root.
+            # `git clone --sparse` initially materializes only root files, so disable
+            # sparse checkout before copying a whole-repository skill.
+            run(["git", "sparse-checkout", "disable"], cwd=checkout)
+            source = checkout
+        else:
             run(["git", "sparse-checkout", "set", "--cone", source_path], cwd=checkout)
             source = checkout / source_path
-        else:
-            source = checkout
 
         expected = source / "SKILL.md"
         if not expected.is_file():
