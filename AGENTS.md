@@ -1,5 +1,11 @@
 # AWFUL MOTION SKILLS agent instructions
 
+## Global reporting rule
+
+- EN: When reporting information to the user, be extremely concise. Sacrifice grammar if needed for brevity.
+- RU: При сообщении информации пользователю будь предельно краткой. Ради краткости можно жертвовать грамматикой.
+
+
 This repository is a reusable visual-production knowledge layer for AI agents and generative models. It covers animation principles, character consistency, concept art, sprites, storyboards, AI video, visual style, game assets, 3D routing, mockups, people/product imagery and visual QA.
 
 Treat repository-local skills as executable working contracts, not inspirational reading.
