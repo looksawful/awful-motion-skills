@@ -253,3 +253,17 @@ A visual result is complete only when the requested artifact exists in the requi
 - exact text/logos require direct fidelity inspection.
 
 State limitations explicitly when actual rendering/playback/runtime verification is unavailable. Never promote source inspection into visual evidence.
+
+## Agent skills
+
+### Issue tracker
+
+GitHub Issues are used for this repository. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Triage vocabulary is configured in `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context layout. See `docs/agents/domain.md`.
